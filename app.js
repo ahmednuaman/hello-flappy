@@ -32,8 +32,8 @@
 
     mcBird = new PIXI.MovieClip([spriteBird0, spriteBird1, spriteBird2]);
 
-    resetBird();
     stage.addChild(mcBird);
+    resetBird();
   }
 
   function animateBirdFlap () {
@@ -45,15 +45,34 @@
   }
 
   function animateBirdFall () {
-    TweenMax.to(mcBird, 2, {
+    TweenMax.to(mcBird, 1.5, {
       y: 768,
       ease: Ease.easeIn,
       onComplete: resetBird
     });
   }
 
+  function flapBird () {
+    TweenMax.killTweensOf(mcBird);
+    TweenMax.to(mcBird, .25, {
+      y: '-=' + 100,
+      ease: Ease.easeOut,
+      onUpdate: limitBird,
+      onComplete: animateBirdFall
+    });
+  }
+
+  function limitBird () {
+    if (mcBird.y < 0) {
+      mcBird.y = 0;
+    }
+  }
+
   function resetBird () {
-    mcBird.x = mcBird.y = 20;
+    mcBird.x = mcBird.y = -20;
+
+    TweenMax.killTweensOf(mcBird);
+    TweenMax.to(mcBird, .5, { x: 70, y: 70, ease: Ease.easeOut });
 
     animateBirdFall();
   }
@@ -72,4 +91,7 @@
   animate();
 
   setInterval(animateBirdFlap, 100);
-})(document, PIXI, TweenMax, Strong);
+
+  document.addEventListener('click', flapBird);
+  document.addEventListener('tapstart', flapBird);
+})(document, PIXI, TweenMax, Sine);
