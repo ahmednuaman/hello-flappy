@@ -1,4 +1,4 @@
-(function (document, PIXI) {
+(function (document, PIXI, TweenMax, Ease) {
   var birdCounter = 0,
       renderer = new PIXI.autoDetectRenderer(432, 768),
       spriteBg1 = new PIXI.Sprite(PIXI.Texture.fromImage('images/bg.png')),
@@ -32,8 +32,7 @@
 
     mcBird = new PIXI.MovieClip([spriteBird0, spriteBird1, spriteBird2]);
 
-    mcBird.x = 20;
-
+    resetBird();
     stage.addChild(mcBird);
   }
 
@@ -45,6 +44,20 @@
     }
   }
 
+  function animateBirdFall () {
+    TweenMax.to(mcBird, 2, {
+      y: 768,
+      ease: Ease.easeIn,
+      onComplete: resetBird
+    });
+  }
+
+  function resetBird () {
+    mcBird.x = mcBird.y = 20;
+
+    animateBirdFall();
+  }
+
   function animate () {
     animateBg();
 
@@ -54,8 +67,9 @@
 
   addBg();
   addBird();
+  animateBirdFall();
 
   animate();
 
   setInterval(animateBirdFlap, 100);
-})(document, PIXI);
+})(document, PIXI, TweenMax, Strong);
