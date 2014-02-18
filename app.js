@@ -32,6 +32,8 @@
     stage.addChild(spriteBg1);
 
     spriteBg1.x = spriteBg1.width;
+
+    renderer.render(stage);
   }
 
   function animateBg () {
@@ -201,11 +203,9 @@
     requestAnimFrame(animate);
   }
 
-  window.addBg();
-  window.addPipes();
-  window.addBird();
-  window.animateBirdFall();
-  window.animate();
+  window.addBg = addBg;
+  window.addPipes = addPipes;
+  window.addBird = addBird;
 
   window.detectCollisions = function () {
     detectCollisions = true;
@@ -219,5 +219,7 @@
     document.addEventListener('click', flapBird);
     document.addEventListener('tapstart', flapBird);
   };
+
+  window.animate = animate;
 
 })(document, PIXI, TweenMax, Sine);
