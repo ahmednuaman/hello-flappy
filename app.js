@@ -13,6 +13,7 @@
       pipeYMax = 360,
       pipeYMin = 45,
       renderer = new PIXI.autoDetectRenderer(appWidth, appHeight),
+      speed = 1,
       spriteBg0 = new PIXI.Sprite(PIXI.Texture.fromImage('images/bg.png')),
       spriteBg1 = new PIXI.Sprite(PIXI.Texture.fromImage('images/bg.png')),
       stage = new PIXI.Stage(0xffffff),
@@ -97,6 +98,10 @@
     mcBird.x = -50;
     mcBird.y = appHeightHalf;
 
+    resetPipes();
+
+    speed = 1;
+
     TweenMax.killTweensOf(mcBird);
     TweenMax.to(mcBird, .5, {
       x: 70,
@@ -113,13 +118,7 @@
     stage.addChild(pipeUp0);
     stage.addChild(pipeUp1);
 
-    pipeDown0.x = pipeUp0.x = appWidth;
-    pipeDown1.x = pipeUp1.x = appWidth * 1.5;
-
-    setRandomYForUpPipe(pipeUp0);
-    setRandomYForUpPipe(pipeUp1);
-    setRandomYForDownPipe(pipeDown0);
-    setRandomYForDownPipe(pipeDown1);
+    resetPipes();
 
     pipeHalfHeight = 39;
     pipeHalfHeightMinus = -pipeHalfHeight;
@@ -128,6 +127,16 @@
 
     pipes = [pipeDown0, pipeDown1, pipeUp0, pipeUp1];
     pipesLength = pipes.length - 1;
+  }
+
+  function resetPipes () {
+    pipeDown0.x = pipeUp0.x = appWidth;
+    pipeDown1.x = pipeUp1.x = appWidth * 1.5;
+
+    setRandomYForUpPipe(pipeUp0);
+    setRandomYForUpPipe(pipeUp1);
+    setRandomYForDownPipe(pipeDown0);
+    setRandomYForDownPipe(pipeDown1);
   }
 
   function setRandomYForUpPipe (pipe) {
@@ -149,7 +158,7 @@
     for (i = pipesLength; i >= 0; i--) {
       pipe = pipes[i];
 
-      pipe.x -= 2;
+      pipe.x -= speed;
 
       if (pipe.x < -pipe.width) {
         pipe.x = appWidth;
@@ -178,6 +187,10 @@
            a.y + a.height > b.y;
   }
 
+  function increaseSpeed () {
+    speed += .3;
+  }
+
   function animate () {
     animateBg();
     animatePipes();
@@ -194,6 +207,7 @@
   animate();
 
   setInterval(animateBirdFlap, 100);
+  setInterval(increaseSpeed, 1000);
 
   document.addEventListener('click', flapBird);
   document.addEventListener('tapstart', flapBird);
