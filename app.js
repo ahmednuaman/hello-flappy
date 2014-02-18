@@ -1,7 +1,9 @@
 (function (document, PIXI, TweenMax, Ease) {
   var appHeight = 768,
+      appHeightHalf = appHeight * .5,
       appWidth = 432,
       birdCounter = 0,
+      detectCollisions = true,
       radDown = Math.PI * .25,
       radUp = 0,
       pipeDown0 = new PIXI.Sprite(PIXI.Texture.fromImage('images/pipe-down.png')),
@@ -15,6 +17,10 @@
       spriteBg1 = new PIXI.Sprite(PIXI.Texture.fromImage('images/bg.png')),
       stage = new PIXI.Stage(0xffffff),
       mcBird,
+      pipeHalfHeight,
+      pipeHalfHeightMinus,
+      pipeHalfWidth,
+      pipeHalfWidthMinus,
       pipes,
       pipesLength;
 
@@ -66,6 +72,10 @@
   }
 
   function flapBird () {
+    if (mcBird.x !== 70) {
+      return;
+    }
+
     TweenMax.killTweensOf(mcBird);
     TweenMax.to(mcBird, .3, {
       y: '-=' + 50,
@@ -84,12 +94,17 @@
 
   function resetBird () {
     mcBird.rotation = 0;
-    mcBird.x = mcBird.y = -20;
+    mcBird.x = -50;
+    mcBird.y = appHeightHalf;
 
     TweenMax.killTweensOf(mcBird);
-    TweenMax.to(mcBird, .5, { x: 70, y: 70, ease: Ease.easeOut });
-
-    animateBirdFall();
+    TweenMax.to(mcBird, .5, {
+      x: 70,
+      y: appHeightHalf,
+      delay: .5,
+      ease: Ease.easeOut,
+      onComplete: animateBirdFall
+    });
   }
 
   function addPipes () {
@@ -106,6 +121,11 @@
     setRandomYForDownPipe(pipeDown0);
     setRandomYForDownPipe(pipeDown1);
 
+    pipeHalfHeight = 39;
+    pipeHalfHeightMinus = -pipeHalfHeight;
+    pipeHalfWidth = 202.5;
+    pipeHalfWidthMinus = -pipeHalfWidth;
+
     pipes = [pipeDown0, pipeDown1, pipeUp0, pipeUp1];
     pipesLength = pipes.length - 1;
   }
@@ -119,7 +139,6 @@
   }
 
   function getRandomNumber(min, max) {
-    console.log(min, max);
     return Math.random() * (max - min) + min;
   }
 
@@ -130,7 +149,7 @@
     for (i = pipesLength; i >= 0; i--) {
       pipe = pipes[i];
 
-      pipe.x--;
+      pipe.x -= 2;
 
       if (pipe.x < -pipe.width) {
         pipe.x = appWidth;
@@ -140,8 +159,23 @@
         } else {
           setRandomYForDownPipe(pipe);
         }
+
+        continue;
+      }
+
+      if (detectCollisions) {
+        if (collides(mcBird, pipe)) {
+          resetBird();
+        }
       }
     };
+  }
+
+  function collides(a, b) {
+    return a.x < b.x + b.width &&
+           a.x + a.width > b.x &&
+           a.y < b.y + b.height &&
+           a.y + a.height > b.y;
   }
 
   function animate () {
