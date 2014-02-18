@@ -1,5 +1,7 @@
 (function (document, PIXI, TweenMax, Ease) {
   var birdCounter = 0,
+      radDown = Math.PI * .25,
+      radUp = -radDown,
       renderer = new PIXI.autoDetectRenderer(432, 768),
       spriteBg1 = new PIXI.Sprite(PIXI.Texture.fromImage('images/bg.png')),
       spriteBg2 = new PIXI.Sprite(PIXI.Texture.fromImage('images/bg.png')),
@@ -47,6 +49,7 @@
   function animateBirdFall () {
     TweenMax.to(mcBird, 1.5, {
       y: 768,
+      rotation: radDown,
       ease: Ease.easeIn,
       onComplete: resetBird
     });
@@ -56,6 +59,7 @@
     TweenMax.killTweensOf(mcBird);
     TweenMax.to(mcBird, .25, {
       y: '-=' + 100,
+      rotation: radUp,
       ease: Ease.easeOut,
       onUpdate: limitBird,
       onComplete: animateBirdFall
@@ -69,6 +73,7 @@
   }
 
   function resetBird () {
+    mcBird.rotation = 0;
     mcBird.x = mcBird.y = -20;
 
     TweenMax.killTweensOf(mcBird);
