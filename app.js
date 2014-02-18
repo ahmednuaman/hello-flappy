@@ -3,7 +3,7 @@
       appHeightHalf = appHeight * .5,
       appWidth = 432,
       birdCounter = 0,
-      detectCollisions = true,
+      detectCollisions = false,
       radDown = Math.PI * .25,
       radUp = 0,
       pipeDown0 = new PIXI.Sprite(PIXI.Texture.fromImage('images/pipe-down.png')),
@@ -53,6 +53,8 @@
 
     stage.addChild(mcBird);
     resetBird();
+
+    setInterval(animateBirdFlap, 100);
   }
 
   function animateBirdFlap () {
@@ -199,16 +201,23 @@
     requestAnimFrame(animate);
   }
 
-  addBg();
-  addPipes();
-  addBird();
-  animateBirdFall();
+  window.addBg();
+  window.addPipes();
+  window.addBird();
+  window.animateBirdFall();
+  window.animate();
 
-  animate();
+  window.detectCollisions = function () {
+    detectCollisions = true;
+  };
 
-  setInterval(animateBirdFlap, 100);
-  setInterval(increaseSpeed, 1000);
+  window.addDifficulty = function () {
+    setInterval(increaseSpeed, 1000);
+  };
 
-  document.addEventListener('click', flapBird);
-  document.addEventListener('tapstart', flapBird);
+  window.addControls = function () {
+    document.addEventListener('click', flapBird);
+    document.addEventListener('tapstart', flapBird);
+  };
+
 })(document, PIXI, TweenMax, Sine);
