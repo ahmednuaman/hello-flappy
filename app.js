@@ -223,3 +223,13 @@
   window.animate = animate;
 
 })(document, PIXI, TweenMax, Sine);
+
+/*
+addBg();
+animate();
+addBird();
+addControls();
+addPipes();
+detectCollisions();
+addDifficulty();
+*/
