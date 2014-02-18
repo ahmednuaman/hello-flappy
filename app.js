@@ -140,11 +140,11 @@
   }
 
   function setRandomYForUpPipe (pipe) {
-    pipe.y = getRandomNumber(appHeight - pipeYMax, appHeight - pipeYMin);
+    pipe.y = getRandomNumber(appHeight - pipeYMax, appHeight - pipeYMin - speed);
   }
 
   function setRandomYForDownPipe (pipe) {
-    pipe.y = getRandomNumber(-pipeYMin, -pipeYMax);
+    pipe.y = getRandomNumber(-pipeYMin, -pipeYMax + speed);
   }
 
   function getRandomNumber(min, max) {
