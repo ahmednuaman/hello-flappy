@@ -1,0 +1,23 @@
+{
+  "name": "hello-flappy",
+  "version": "0.0.1",
+  "homepage": "https://github.com/ahmednuaman/hello-flappy",
+  "authors": [
+    "Ahmed Nuaman <ahmed@ahmednuaman.com>"
+  ],
+  "description": "A 'flappy birds' example used to teach kids how to code",
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "pixi": "~1.5.1",
+    "greensock": "~1.11.4",
+    "consolejs": "git://github.com/evilmarty/consolejs.git"
+  }
+}
