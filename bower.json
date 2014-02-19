@@ -17,6 +17,7 @@
   ],
   "dependencies": {
     "pixi": "~1.5.1",
-    "greensock": "~1.11.4"
+    "greensock": "~1.11.4",
+    "consolejs": "git://github.com/evilmarty/consolejs.git"
   }
 }
