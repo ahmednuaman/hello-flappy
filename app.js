@@ -203,6 +203,10 @@
     requestAnimFrame(animate);
   }
 
+  function initConsole () {
+    var console = new Console('console');
+  }
+
   window.addBg = addBg;
   window.addPipes = addPipes;
   window.addBird = addBird;
@@ -222,6 +226,7 @@
 
   window.animate = animate;
 
+  initConsole();
 })(document, PIXI, TweenMax, Sine);
 
 /*
