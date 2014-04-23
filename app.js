@@ -226,10 +226,9 @@
 
   window.animate = animate;
 
-  initConsole();
+  // initConsole();
 })(document, PIXI, TweenMax, Sine);
 
-/*
 addBg();
 animate();
 addBird();
@@ -237,4 +236,3 @@ addControls();
 addPipes();
 detectCollisions();
 addDifficulty();
-*/
