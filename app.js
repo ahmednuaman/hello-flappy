@@ -1,9 +1,10 @@
-(function (document, PIXI, TweenMax, Ease) {
+(function (window, PIXI, TweenMax, Ease) {
   var appHeight = 768,
       appHeightHalf = appHeight * .5,
       appWidth = 432,
       birdCounter = 0,
       detectCollisions = false,
+      game = {},
       radDown = Math.PI * .25,
       radUp = 0,
       pipeDown0 = new PIXI.Sprite(PIXI.Texture.fromImage('images/pipe-down.png')),
@@ -25,7 +26,7 @@
       pipes,
       pipesLength;
 
-  document.body.appendChild(renderer.view);
+  window.document.body.appendChild(renderer.view);
 
   function addBg () {
     stage.addChild(spriteBg0);
@@ -207,34 +208,35 @@
     var console = new Console('console');
   }
 
-  window.addBg = addBg;
-  window.addPipes = addPipes;
-  window.addBird = addBird;
+  game.addBg = addBg;
+  game.addPipes = addPipes;
+  game.addBird = addBird;
+  game.animate = animate;
 
-  window.detectCollisions = function () {
+  game.detectCollisions = function () {
     detectCollisions = true;
   };
 
-  window.addDifficulty = function () {
+  game.addDifficulty = function () {
     setInterval(increaseSpeed, 1000);
   };
 
-  window.addControls = function () {
-    document.addEventListener('click', flapBird);
-    document.addEventListener('tapstart', flapBird);
+  game.addControls = function () {
+    window.document.addEventListener('click', flapBird);
+    window.document.addEventListener('tapstart', flapBird);
   };
 
-  window.animate = animate;
+  game.init = function () {
+    game.addBg();
+    game.animate();
+    game.addBird();
+    game.addControls();
+    game.addPipes();
+    game.detectCollisions();
+    game.addDifficulty();
+  }
+
+  window.game = game;
 
   initConsole();
-})(document, PIXI, TweenMax, Sine);
-
-/*
-addBg();
-animate();
-addBird();
-addControls();
-addPipes();
-detectCollisions();
-addDifficulty();
-*/
+})(window, PIXI, TweenMax, Sine);

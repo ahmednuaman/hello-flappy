@@ -28,10 +28,24 @@
 </head>
 <body>
   <div id="console"></div>
-  <script src="bower_components/consolejs/console.min.js"></script>
+  <script src="bower_components/consolejs/console.js"></script>
   <script src="bower_components/greensock/src/minified/TweenMax.min.js"></script>
   <script src="bower_components/greensock/src/minified/easing/EasePack.min.js"></script>
   <script src="bower_components/pixi/bin/pixi.js"></script>
   <script src="app.js"></script>
+  <script>
+    var interactive = window.location.hash === '#interactive';
+
+    if (interactive) {
+      Console('console', window);
+
+      document
+        .getElementById('console')
+        .getElementsByTagName('textarea')[0]
+        .focus();
+    } else {
+      game.init();
+    }
+  </script>
 </body>
 </html>
