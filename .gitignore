@@ -1,6 +1,1 @@
 bower_components
-!bower_components/consolejs/console.css
-!bower_components/consolejs/console.min.js
-!bower_components/greensock/src/minified/TweenMax.min.js
-!bower_components/greensock/src/minified/easing/EasePack.min.js
-!bower_components/pixi/bin/pixi.js
