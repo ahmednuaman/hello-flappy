@@ -7,13 +7,13 @@ Visit: [http://ahmednuaman.github.com/hello-flappy/](http://ahmednuaman.github.c
 ## How to learn
 Visit: [http://ahmednuaman.github.com/hello-flappy/#interactive](http://ahmednuaman.github.com/hello-flappy/#interactive) and then enter the following into the console at the bottom of the window as a sequence and watch the game come to life:
 
-  game.addBg();
-  game.animate();
-  game.addBird();
-  game.addControls();
-  game.addPipes();
-  game.detectCollisions();
-  game.addDifficulty();
+    game.addBg();
+    game.animate();
+    game.addBird();
+    game.addControls();
+    game.addPipes();
+    game.detectCollisions();
+    game.addDifficulty();
 
 ### License: MIT
 Copyright © 2014 Ahmed Nuaman
